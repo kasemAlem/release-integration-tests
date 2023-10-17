@@ -1,0 +1,24 @@
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: EnterpriseContractPolicy
+metadata:
+  name: release-policy
+  namespace: managed-release-team-tenant
+spec:
+  configuration:
+    exclude:
+      - cve # The release process separates the catalog from the binaries, so CVEs are the responsibility of the OLM team
+      # - step_image_registries
+      # - tasks.required_tasks_found:prefetch-dependencies # prefetch is not required
+    include:
+      - minimal
+      - '@redhat'
+      - java
+  description: 'Includes rules for shipping Red Hat FBC fragments'
+  publicKey: 'k8s://openshift-pipelines/public-key'
+  sources:
+    - data:
+        - github.com/enterprise-contract/ec-policies//data
+      name: Default
+      policy:
+        - github.com/enterprise-contract/ec-policies//policy/lib
+        - github.com/enterprise-contract/ec-policies//policy/release

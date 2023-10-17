@@ -1,0 +1,18 @@
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: ReleaseStrategy
+metadata:
+  name: release-strategy
+  namespace: managed-release-team-tenant
+spec:
+  params:
+  pipelineRef:
+    params:
+      - name: url
+        value: https://github.com/redhat-appstudio/release-service-catalog.git
+      - name: revision
+        value: main
+      - name: pathInRepo
+        value: pipelines/release/release.yaml
+    resolver: "git"
+  policy: release-policy
+  serviceAccount: release-service-account
